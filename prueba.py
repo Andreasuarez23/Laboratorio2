@@ -56,3 +56,11 @@ emisores[4].agregar_vecino(emisores[3])
 emisores[0].enviar_mensaje("Hola", emisores[1])
 emisores[2].enviar_mensaje("Hola", emisores[4])
 emisores[3].enviar_mensaje("Hola", emisores[1])
+
+
+
+emisor_a = Emisor("A")
+receptor_b= Receptor("B",distancia=1)
+receptor_c= Receptor("C",distancia=2)
+emisor_a.enviar_mensaje(receptor_b)
+emisor_a.enviar_mensaje(receptor_c)

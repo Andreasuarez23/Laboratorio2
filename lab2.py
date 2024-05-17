@@ -66,5 +66,7 @@ nodos["A"].enviar_mensaje("Hola", nodos["B"])
 nodos["C"].enviar_mensaje("Hola", nodos["E"])
 nodos["D"].enviar_mensaje("Hola", nodos["B"])
 nodos["A"].enviar_mensaje("Hola", nodos["E"]) 
+nodos["B"].enviar_mensaje("Hola",nodos["E"])
+nodos["E"].enviar_mensaje("Hola",nodos["D"])
 
 

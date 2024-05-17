@@ -11,28 +11,60 @@ vecino de distancia. Caso contrario , el mensaje no se entrega pero se indica en
 caso."""
 
 #Integrantes del grupo: Mijal Nuñez - Andrea Suarez
-
-class Emisor:
+class Nodo:
     def __init__(self, nombre):
         self.nombre = nombre
-        
-        
+        self.vecinos = []
 
-    def enviar_mensaje(self, receptor): #funcion que envia el mensaje
-        if receptor.distancia <= 1:
-            print(f"Mensaje entregado de {self.nombre} a {receptor.nombre}")
+    def agregar_vecino(self, vecino):
+        self.vecinos.append(vecino)
+
+    def enviar_mensaje(self, mensaje, receptor):
+        if receptor in self.vecinos:
+            print(f"Nodo {self.nombre} envía mensaje '{mensaje}' a Nodo {receptor.nombre}")
+            receptor.recibir_mensaje(mensaje, self)
         else:
-            print(f"El receptor {receptor.nombre} está demasiado lejos para recibir el mensaje.")
+            print(f"El receptor {receptor.nombre} está demasiado lejos para recibir el mensaje '{mensaje}'.")
+
+    def recibir_mensaje(self, mensaje, emisor):
+        print(f"Nodo {self.nombre} recibe mensaje '{mensaje}' de Nodo {emisor.nombre}")
 
 
-class Receptor:
-    def __init__(self, nombre, distancia):  #tiene como atributo la distancia en el que se encuentra el receptor
-        self.nombre = nombre
-        self.distancia = distancia
+# Crear nodos
+nodos = {
+    "A": Nodo("A"),
+    "B": Nodo("B"),
+    "C": Nodo("C"),
+    "D": Nodo("D"),
+    "E": Nodo("E")
+}
 
-#enviar mensaje
-emisor_a = Emisor("A")
-receptor_b= Receptor("B",distancia=1)
-receptor_c= Receptor("C",distancia=2)
-emisor_a.enviar_mensaje(receptor_b)
-emisor_a.enviar_mensaje(receptor_c)
+# Definir vecinos para cada nodo (topología mesh)
+nodos["A"].agregar_vecino(nodos["B"])
+nodos["A"].agregar_vecino(nodos["C"])
+nodos["A"].agregar_vecino(nodos["D"])
+
+nodos["B"].agregar_vecino(nodos["A"])
+nodos["B"].agregar_vecino(nodos["C"])
+nodos["B"].agregar_vecino(nodos["E"])
+
+nodos["C"].agregar_vecino(nodos["A"])
+nodos["C"].agregar_vecino(nodos["B"])
+nodos["C"].agregar_vecino(nodos["D"])
+nodos["C"].agregar_vecino(nodos["E"])
+
+nodos["D"].agregar_vecino(nodos["A"])
+nodos["D"].agregar_vecino(nodos["C"])
+nodos["D"].agregar_vecino(nodos["E"])
+
+nodos["E"].agregar_vecino(nodos["B"])
+nodos["E"].agregar_vecino(nodos["C"])
+nodos["E"].agregar_vecino(nodos["D"])
+
+# Envío de mensajes entre nodos
+nodos["A"].enviar_mensaje("Hola", nodos["B"])
+nodos["C"].enviar_mensaje("Hola", nodos["E"])
+nodos["D"].enviar_mensaje("Hola", nodos["B"])
+nodos["A"].enviar_mensaje("Hola", nodos["E"]) 
+
+
